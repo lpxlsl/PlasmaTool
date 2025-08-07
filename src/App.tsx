@@ -9,6 +9,7 @@ function App() {
   const [currentPage, setCurrentPage] = useState<'home' | 'premium' | 'download'>('home');
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [user, setUser] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     // Check if user is already logged in
@@ -16,10 +17,14 @@ function App() {
     if (savedUser) {
       const userData = JSON.parse(savedUser);
       setUser(userData.username);
-    } else {
-      // Show auth modal for first-time visitors
+    }
+    
+    // Always show auth modal if no user is logged in
+    if (!savedUser) {
       setIsAuthModalOpen(true);
     }
+    
+    setIsLoading(false);
 
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
@@ -39,6 +44,31 @@ function App() {
     setUser(null);
     setIsAuthModalOpen(true);
   };
+
+  // Don't render anything until we check authentication status
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-purple-400 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-purple-300 text-lg">Loading PlasmaServices...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Don't render main content if user is not logged in
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+        <AuthModal
+          isOpen={isAuthModalOpen}
+          onClose={() => {}} // Prevent closing without login
+          onLogin={handleLogin}
+        />
+      </div>
+    );
+  }
 
   if (currentPage === 'premium') {
     return <PremiumPage onBack={() => setCurrentPage('home')} />;
@@ -116,25 +146,26 @@ function App() {
               <Zap className="w-8 h-8 text-purple-400 animate-pulse" />
               <div className="absolute inset-0 w-8 h-8 bg-purple-400 blur-lg opacity-50 animate-pulse" />
             </div>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent animate-pulse">
-              PlasmaServices
-            </h1>
+            <div className="flex items-center space-x-3">
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent animate-pulse">
+                PlasmaServices
+              </h1>
+              <div className="flex items-center space-x-2 px-3 py-1 bg-gradient-to-r from-purple-900/50 to-cyan-900/50 rounded-full border border-purple-500/30">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                <span className="text-purple-300 text-sm font-medium">{user}</span>
+              </div>
+            </div>
           </div>
 
           {/* Navigation */}
           <div className="flex items-center space-x-8">
-            {/* User Info */}
-            {user && (
-              <div className="flex items-center space-x-4">
-                <span className="text-purple-300">Welcome, {user}</span>
-                <button
-                  onClick={handleLogout}
-                  className="text-sm text-gray-400 hover:text-white transition-colors duration-300"
-                >
-                  Logout
-                </button>
-              </div>
-            )}
+            {/* Logout Button */}
+            <button
+              onClick={handleLogout}
+              className="text-sm text-gray-400 hover:text-red-400 transition-colors duration-300 px-3 py-1 rounded-lg hover:bg-red-900/20"
+            >
+              Logout
+            </button>
             
             <button 
               onClick={() => setCurrentPage('download')}
@@ -260,13 +291,6 @@ function App() {
           </div>
         </div>
       </main>
-
-      {/* Auth Modal */}
-      <AuthModal
-        isOpen={isAuthModalOpen}
-        onClose={() => setIsAuthModalOpen(false)}
-        onLogin={handleLogin}
-      />
 
       {/* Footer Decoration */}
       <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 animate-pulse" />
