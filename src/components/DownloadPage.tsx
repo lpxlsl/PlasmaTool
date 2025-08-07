@@ -8,12 +8,19 @@ interface DownloadPageProps {
 const DownloadPage: React.FC<DownloadPageProps> = ({ onBack }) => {
   const [isChecking, setIsChecking] = useState(false);
   const [hasSubscribed, setHasSubscribed] = useState(false);
+  const [hasClickedSubscribe, setHasClickedSubscribe] = useState(false);
 
   const handleSubscribeClick = () => {
+    setHasClickedSubscribe(true);
     window.open('https://www.youtube.com/@yonyonsyoner', '_blank');
   };
 
   const handleCheckSubscription = async () => {
+    if (!hasClickedSubscribe) {
+      alert('Please subscribe to the YouTube channel first!');
+      return;
+    }
+    
     setIsChecking(true);
     
     // Simulate checking subscription status
@@ -124,12 +131,14 @@ const DownloadPage: React.FC<DownloadPageProps> = ({ onBack }) => {
               {/* Check Subscription Button */}
               <button
                 onClick={handleCheckSubscription}
-                disabled={isChecking || hasSubscribed}
+                disabled={isChecking || hasSubscribed || !hasClickedSubscribe}
                 className={`w-full flex items-center justify-center space-x-3 py-4 px-6 font-semibold rounded-xl transition-all duration-300 ${
                   hasSubscribed
                     ? 'bg-gradient-to-r from-green-600 to-green-700 text-white'
                     : isChecking
                     ? 'bg-gradient-to-r from-purple-600/50 to-pink-600/50 text-white cursor-not-allowed'
+                    : !hasClickedSubscribe
+                    ? 'bg-gradient-to-r from-gray-600/50 to-gray-700/50 text-gray-400 cursor-not-allowed'
                     : 'bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:from-purple-500 hover:to-pink-500 hover:scale-105 animate-pulse-glow'
                 }`}
               >

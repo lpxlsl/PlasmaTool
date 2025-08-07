@@ -9,7 +9,7 @@ const PremiumPage: React.FC<PremiumPageProps> = ({ onBack }) => {
   const tiers = [
     {
       name: 'Basic',
-      price: '200',
+      price: '€5',
       color: 'from-gray-600 to-gray-800',
       borderColor: 'border-gray-500/30',
       hoverBorder: 'hover:border-gray-400/50',
@@ -22,7 +22,7 @@ const PremiumPage: React.FC<PremiumPageProps> = ({ onBack }) => {
     },
     {
       name: 'Silver',
-      price: '500',
+      price: '€10',
       color: 'from-slate-500 to-slate-700',
       borderColor: 'border-slate-400/30',
       hoverBorder: 'hover:border-slate-300/50',
@@ -37,7 +37,7 @@ const PremiumPage: React.FC<PremiumPageProps> = ({ onBack }) => {
     },
     {
       name: 'Gold',
-      price: '1,500',
+      price: '€20',
       color: 'from-yellow-500 to-yellow-700',
       borderColor: 'border-yellow-400/30',
       hoverBorder: 'hover:border-yellow-300/50',
@@ -51,6 +51,10 @@ const PremiumPage: React.FC<PremiumPageProps> = ({ onBack }) => {
       ]
     }
   ];
+
+  const handleChoosePlan = () => {
+    window.open('https://discord.gg/g97DXFbcCW', '_blank');
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden relative">
@@ -154,7 +158,7 @@ const PremiumPage: React.FC<PremiumPageProps> = ({ onBack }) => {
                   {/* Price */}
                   <div className="text-center mb-8">
                     <span className="text-4xl font-bold text-white">{tier.price}</span>
-                    <span className="text-gray-300 ml-2">RBX/month</span>
+                    <span className="text-gray-300 ml-2">/month</span>
                   </div>
 
                   {/* Features */}
@@ -170,7 +174,10 @@ const PremiumPage: React.FC<PremiumPageProps> = ({ onBack }) => {
                   </ul>
 
                   {/* CTA Button */}
-                  <button className="w-full py-3 bg-gradient-to-r from-purple-600 to-cyan-600 text-white font-bold rounded-lg hover:scale-105 transition-all duration-300 animate-pulse-glow">
+                  <button 
+                    onClick={handleChoosePlan}
+                    className="w-full py-3 bg-gradient-to-r from-purple-600 to-cyan-600 text-white font-bold rounded-lg hover:scale-105 transition-all duration-300 animate-pulse-glow"
+                  >
                     Choose {tier.name}
                   </button>
                 </div>

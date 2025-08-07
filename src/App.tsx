@@ -2,12 +2,25 @@ import React, { useEffect, useState } from 'react';
 import { Zap, Sparkles, HexagonIcon } from 'lucide-react';
 import PremiumPage from './components/PremiumPage';
 import DownloadPage from './components/DownloadPage';
+import AuthModal from './components/AuthModal';
 
 function App() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [currentPage, setCurrentPage] = useState<'home' | 'premium' | 'download'>('home');
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [user, setUser] = useState<string | null>(null);
 
   useEffect(() => {
+    // Check if user is already logged in
+    const savedUser = localStorage.getItem('plasmaUser');
+    if (savedUser) {
+      const userData = JSON.parse(savedUser);
+      setUser(userData.username);
+    } else {
+      // Show auth modal for first-time visitors
+      setIsAuthModalOpen(true);
+    }
+
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
@@ -15,6 +28,17 @@ function App() {
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
+
+  const handleLogin = (username: string) => {
+    setUser(username);
+    setIsAuthModalOpen(false);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('plasmaUser');
+    setUser(null);
+    setIsAuthModalOpen(true);
+  };
 
   if (currentPage === 'premium') {
     return <PremiumPage onBack={() => setCurrentPage('home')} />;
@@ -99,6 +123,19 @@ function App() {
 
           {/* Navigation */}
           <div className="flex items-center space-x-8">
+            {/* User Info */}
+            {user && (
+              <div className="flex items-center space-x-4">
+                <span className="text-purple-300">Welcome, {user}</span>
+                <button
+                  onClick={handleLogout}
+                  className="text-sm text-gray-400 hover:text-white transition-colors duration-300"
+                >
+                  Logout
+                </button>
+              </div>
+            )}
+            
             <button 
               onClick={() => setCurrentPage('download')}
               className="relative px-6 py-2 text-purple-300 hover:text-white transition-all duration-300 group"
@@ -223,6 +260,13 @@ function App() {
           </div>
         </div>
       </main>
+
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        onLogin={handleLogin}
+      />
 
       {/* Footer Decoration */}
       <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 animate-pulse" />
