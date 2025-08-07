@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Zap, Sparkles, HexagonIcon } from 'lucide-react';
 import PremiumPage from './components/PremiumPage';
+import DownloadPage from './components/DownloadPage';
 
 function App() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [currentPage, setCurrentPage] = useState<'home' | 'premium'>('home');
+  const [currentPage, setCurrentPage] = useState<'home' | 'premium' | 'download'>('home');
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -17,6 +18,10 @@ function App() {
 
   if (currentPage === 'premium') {
     return <PremiumPage onBack={() => setCurrentPage('home')} />;
+  }
+
+  if (currentPage === 'download') {
+    return <DownloadPage onBack={() => setCurrentPage('home')} />;
   }
 
   return (
@@ -94,6 +99,15 @@ function App() {
 
           {/* Navigation */}
           <div className="flex items-center space-x-8">
+            <button 
+              onClick={() => setCurrentPage('download')}
+              className="relative px-6 py-2 text-purple-300 hover:text-white transition-all duration-300 group"
+            >
+              <span className="relative z-10">Download</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
+              <div className="absolute inset-0 border border-purple-400 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-pulse" />
+            </button>
+            
             <button 
               onClick={() => setCurrentPage('premium')}
               className="relative px-6 py-2 text-purple-300 hover:text-white transition-all duration-300 group"
