@@ -380,10 +380,10 @@ function App() {
           {/* Hero Title */}
           <div className="mb-8">
             <h2 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent mb-6 animate-float">
-              The All-in-One Discord Utility
+              The All-in-One Discord Utility Bot
             </h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed animate-fade-in-up">
-              A sleek, terminal-style utility designed for advanced Discord management, automation, and integration. 
+              A sleek, terminal-style utility bot designed for advanced Discord management, automation, and integration. 
               Built for server owners, moderators, and tech enthusiasts who want more control and speed.
             </p>
           </div>
@@ -427,7 +427,7 @@ function App() {
             {[
               { icon: Zap, title: "Lightning-Fast Commands", desc: "No clutter, just instant actions for Discord management" },
               { icon: Sparkles, title: "Retro Aesthetic", desc: "Nostalgic ASCII-art interface while getting work done" },
-              { icon: HexagonIcon, title: "Multi-Purpose Utility", desc: "Perfect for automation, moderation, and secure operations" }
+              { icon: HexagonIcon, title: "Multi-Purpose Utility Bot", desc: "Perfect for automation, moderation, and secure operations" }
             ].map((feature, i) => (
               <div
                 key={i}
