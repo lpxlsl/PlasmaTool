@@ -172,7 +172,6 @@ const PremiumPage: React.FC<PremiumPageProps> = ({ onBack }) => {
 
                   {/* CTA Button */}
                   <button 
-                    onClick={handleChoosePlan}
                     className="w-full py-3 bg-gradient-to-r from-gray-600 to-gray-700 text-white font-bold rounded-lg cursor-not-allowed opacity-75"
                     disabled
                   >
