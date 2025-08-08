@@ -261,7 +261,7 @@ function App() {
             </div>
             <div className="flex items-center space-x-3">
               <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent animate-pulse">
-                PlasmaServices
+                PlasmaTool
               </h1>
               <div className="relative user-dropdown">
                 <button
@@ -379,11 +379,12 @@ function App() {
         <div className="max-w-6xl mx-auto text-center">
           {/* Hero Title */}
           <div className="mb-8">
-            <h2 className="text-6xl md:text-8xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent mb-6 animate-float">
-              Experience Plasma
+            <h2 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent mb-6 animate-float">
+              The All-in-One Discord Utility
             </h2>
-            <p className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed animate-fade-in-up">
-              Enter the future of digital innovation with cutting-edge technology and limitless possibilities.
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed animate-fade-in-up">
+              A sleek, terminal-style utility designed for advanced Discord management, automation, and integration. 
+              Built for server owners, moderators, and tech enthusiasts who want more control and speed.
             </p>
           </div>
 
@@ -424,9 +425,9 @@ function App() {
           {/* Feature Cards */}
           <div className="grid md:grid-cols-3 gap-8 mt-16">
             {[
-              { icon: Zap, title: "Lightning Fast", desc: "Blazing performance with quantum acceleration" },
-              { icon: Sparkles, title: "Neural Interface", desc: "Advanced AI-powered user experience" },
-              { icon: HexagonIcon, title: "Quantum Core", desc: "Next-generation processing architecture" }
+              { icon: Zap, title: "Lightning-Fast Commands", desc: "No clutter, just instant actions for Discord management" },
+              { icon: Sparkles, title: "Retro Aesthetic", desc: "Nostalgic ASCII-art interface while getting work done" },
+              { icon: HexagonIcon, title: "Multi-Purpose Utility", desc: "Perfect for automation, moderation, and secure operations" }
             ].map((feature, i) => (
               <div
                 key={i}
@@ -452,13 +453,45 @@ function App() {
 
           {/* CTA Button */}
           <div className="mt-16">
+            {/* Key Features Section */}
+            <div className="mb-16">
+              <h3 className="text-3xl font-bold text-white text-center mb-12 animate-pulse">
+                Key Features
+              </h3>
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                {[
+                  { title: "IP Lookup", desc: "Check IP information for troubleshooting and security" },
+                  { title: "Send Webhook Messages", desc: "Automate announcements to Discord channels" },
+                  { title: "Show HWID", desc: "Retrieve Hardware ID for system verification" },
+                  { title: "Credits", desc: "View developers and contributors" },
+                  { title: "File to Website", desc: "Instant redirect to the website" },
+                  { title: "File to Discord Server", desc: "Quick access to support server" },
+                  { title: "Reset Nickname/Password", desc: "Manage account credentials (beta)" },
+                  { title: "Exit", desc: "Clean tool closure when work is done" }
+                ].map((feature, i) => (
+                  <div
+                    key={i}
+                    className="group p-6 rounded-xl bg-gradient-to-br from-purple-900/30 to-cyan-900/30 backdrop-blur-lg border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300 animate-fade-in-up"
+                    style={{ animationDelay: `${i * 0.1}s` }}
+                  >
+                    <h4 className="text-lg font-bold text-purple-300 mb-2 group-hover:text-purple-200 transition-colors duration-300">
+                      {feature.title}
+                    </h4>
+                    <p className="text-gray-400 text-sm group-hover:text-gray-300 transition-colors duration-300">
+                      {feature.desc}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             <a 
               href="https://discord.gg/g97DXFbcCW"
               target="_blank"
               rel="noopener noreferrer"
               className="group relative inline-block px-12 py-4 bg-gradient-to-r from-purple-600 to-cyan-600 text-white font-bold text-lg rounded-full hover:scale-105 transition-all duration-300 animate-pulse-glow cursor-pointer"
             >
-              <span className="relative z-10">Enter the Plasma</span>
+              <span className="relative z-10">Get PlasmaTool</span>
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-purple-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-cyan-600 rounded-full blur-lg opacity-50 group-hover:opacity-75 transition-opacity duration-300" />
             </a>

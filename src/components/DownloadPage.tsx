@@ -104,17 +104,18 @@ const DownloadPage: React.FC<DownloadPageProps> = ({ onBack }) => {
 
             {/* Title */}
             <h1 className="text-4xl font-bold text-white mb-6 animate-float">
-              Get PlasmaTools
+              Download PlasmaTool
             </h1>
 
             {/* Subtitle */}
             <p className="text-gray-400 text-lg mb-8">
-              Subscribe to our YouTube channel to access the download
+              The All-in-One Discord Utility - Subscribe to access the download
             </p>
 
             {/* Description */}
             <p className="text-gray-500 mb-12 leading-relaxed">
-              To download PlasmaTools, please subscribe to our YouTube channel first.
+              To download PlasmaTool, please subscribe to our YouTube channel first. 
+              Get access to advanced Discord management, automation, and integration features.
             </p>
 
             {/* Action Buttons */}

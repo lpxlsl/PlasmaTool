@@ -15,9 +15,10 @@ const PremiumPage: React.FC<PremiumPageProps> = ({ onBack }) => {
       hoverBorder: 'hover:border-gray-400/50',
       icon: Zap,
       features: [
-        'Faster Discord Response',
-        'Basic Tool Access',
-        'Community Support'
+        'Faster Discord Bot Response',
+        'Basic Utility Access',
+        'Community Support',
+        'Standard Webhook Features'
       ]
     },
     {
@@ -29,10 +30,11 @@ const PremiumPage: React.FC<PremiumPageProps> = ({ onBack }) => {
       icon: Crown,
       popular: true,
       features: [
-        'Priority Discord Response',
-        'Premium Tool Features',
+        'Priority Discord Bot Response',
+        'Advanced Utility Features',
         'Advanced Support',
-        'Exclusive Commands'
+        'Exclusive Commands',
+        'Enhanced IP Lookup Tools'
       ]
     },
     {
@@ -43,11 +45,13 @@ const PremiumPage: React.FC<PremiumPageProps> = ({ onBack }) => {
       hoverBorder: 'hover:border-yellow-300/50',
       icon: Gem,
       features: [
-        'Instant Discord Response',
-        'Full Premium Access',
+        'Instant Discord Bot Response',
+        'Full Utility Suite Access',
         'VIP Support Channel',
         'Beta Feature Access',
-        'Custom Tool Configurations'
+        'Custom Tool Configurations',
+        'Advanced HWID Management',
+        'Premium Webhook Automation'
       ]
     }
   ];
@@ -113,10 +117,11 @@ const PremiumPage: React.FC<PremiumPageProps> = ({ onBack }) => {
           {/* Hero Section */}
           <div className="text-center mb-16">
             <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent mb-6 animate-float">
-              Premium Access
+              PlasmaTool Premium
             </h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed animate-fade-in-up">
-              Unlock the full potential of PlasmaServices with premium features, priority support, and exclusive access to advanced tools.
+              Unlock advanced Discord utility features with premium access. Get priority support, 
+              exclusive commands, and enhanced automation capabilities for your Discord management needs.
             </p>
           </div>
 
@@ -189,10 +194,10 @@ const PremiumPage: React.FC<PremiumPageProps> = ({ onBack }) => {
           <div className="text-center mt-16">
             <div className="mb-8 p-6 bg-gradient-to-r from-purple-900/30 to-cyan-900/30 rounded-2xl border border-purple-500/30 max-w-2xl mx-auto">
               <h3 className="text-2xl font-bold text-white mb-4 animate-pulse">
-                Ready to Upgrade?
+                Ready to Upgrade Your Discord Management?
               </h3>
               <p className="text-purple-300 mb-4">
-                Join our Discord server to purchase your premium subscription and unlock exclusive features.
+                Join our Discord server to purchase your premium subscription and unlock exclusive PlasmaTool features for advanced Discord utility management.
               </p>
               <a 
                 href="https://discord.gg/g97DXFbcCW"
