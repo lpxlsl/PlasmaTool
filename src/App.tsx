@@ -500,10 +500,11 @@ function App() {
             <div className="mt-6">
               <button
                 onClick={() => window.open('https://example.com/tool-preview', '_blank')}
-                className="group relative inline-block px-8 py-3 bg-gradient-to-r from-gray-700 to-gray-800 text-white font-semibold text-base rounded-full hover:scale-105 transition-all duration-300 border border-gray-600/50 hover:border-gray-500/70"
+                className="group relative inline-block px-10 py-4 bg-gradient-to-r from-slate-700 via-gray-700 to-slate-800 text-white font-bold text-lg rounded-full hover:scale-105 transition-all duration-300 border border-slate-500/30 hover:border-slate-400/60 animate-pulse cursor-pointer"
               >
-                <span className="relative z-10">Tool Preview</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-gray-600 to-gray-700 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <span className="relative z-10 bg-gradient-to-r from-slate-200 to-white bg-clip-text text-transparent">Tool Preview</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-slate-600 via-gray-600 to-slate-700 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute -inset-1 bg-gradient-to-r from-slate-600 to-gray-600 rounded-full blur-lg opacity-30 group-hover:opacity-60 transition-opacity duration-300" />
               </button>
             </div>
           </div>
