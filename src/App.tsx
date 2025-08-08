@@ -499,12 +499,11 @@ function App() {
             {/* Tool Preview Button */}
             <div className="mt-6">
               <button
-                onClick={() => window.open('https://example.com/tool-preview', '_blank')}
-                className="group relative inline-block px-10 py-4 bg-gradient-to-r from-slate-700 via-gray-700 to-slate-800 text-white font-bold text-lg rounded-full hover:scale-105 transition-all duration-300 border border-slate-500/30 hover:border-slate-400/60 animate-pulse cursor-pointer"
+                disabled
+                className="group relative inline-block px-10 py-4 bg-gradient-to-r from-slate-700/50 via-gray-700/50 to-slate-800/50 text-white font-bold text-lg rounded-full transition-all duration-300 border border-slate-500/20 cursor-not-allowed opacity-75"
               >
-                <span className="relative z-10 bg-gradient-to-r from-slate-200 to-white bg-clip-text text-transparent">Tool Preview</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-slate-600 via-gray-600 to-slate-700 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute -inset-1 bg-gradient-to-r from-slate-600 to-gray-600 rounded-full blur-lg opacity-30 group-hover:opacity-60 transition-opacity duration-300" />
+                <span className="relative z-10 bg-gradient-to-r from-slate-300 to-gray-300 bg-clip-text text-transparent">Tool Preview - Coming Soon</span>
+                <div className="absolute -inset-1 bg-gradient-to-r from-slate-600/20 to-gray-600/20 rounded-full blur-lg opacity-20" />
               </button>
             </div>
           </div>
