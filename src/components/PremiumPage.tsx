@@ -15,8 +15,8 @@ const PremiumPage: React.FC<PremiumPageProps> = ({ onBack }) => {
       hoverBorder: 'hover:border-gray-400/50',
       icon: Zap,
       features: [
-        'Faster Discord Bot Response',
-        'Basic Utility Bot Access',
+        'Faster Discord Tool Response',
+        'Basic Utility Tool Access',
         'Community Support',
         'Standard Webhook Features'
       ]
@@ -30,8 +30,8 @@ const PremiumPage: React.FC<PremiumPageProps> = ({ onBack }) => {
       icon: Crown,
       popular: true,
       features: [
-        'Priority Discord Bot Response',
-        'Advanced Utility Bot Features',
+        'Priority Discord Tool Response',
+        'Advanced Utility Tool Features',
         'Advanced Support',
         'Exclusive Commands',
         'Enhanced IP Lookup Tools'
@@ -45,8 +45,8 @@ const PremiumPage: React.FC<PremiumPageProps> = ({ onBack }) => {
       hoverBorder: 'hover:border-yellow-300/50',
       icon: Gem,
       features: [
-        'Instant Discord Bot Response',
-        'Full Utility Bot Suite Access',
+        'Instant Discord Tool Response',
+        'Full Utility Tool Suite Access',
         'VIP Support Channel',
         'Beta Feature Access',
         'Custom Tool Configurations',
@@ -120,7 +120,7 @@ const PremiumPage: React.FC<PremiumPageProps> = ({ onBack }) => {
               PlasmaTool Premium
             </h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed animate-fade-in-up">
-              Unlock advanced Discord utility bot features with premium access. Get priority support, 
+              Unlock advanced Discord utility tool features with premium access. Get priority support, 
               exclusive commands, and enhanced automation capabilities for your Discord management needs.
             </p>
           </div>
@@ -197,7 +197,7 @@ const PremiumPage: React.FC<PremiumPageProps> = ({ onBack }) => {
                 Ready to Upgrade Your Discord Management?
               </h3>
               <p className="text-purple-300 mb-4">
-                Join our Discord server to purchase your premium subscription and unlock exclusive PlasmaTool features for advanced Discord utility bot management.
+                Join our Discord server to purchase your premium subscription and unlock exclusive PlasmaTool features for advanced Discord utility tool management.
               </p>
               <a 
                 href="https://discord.gg/g97DXFbcCW"

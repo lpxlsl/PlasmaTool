@@ -109,13 +109,13 @@ const DownloadPage: React.FC<DownloadPageProps> = ({ onBack }) => {
 
             {/* Subtitle */}
             <p className="text-gray-400 text-lg mb-8">
-              The All-in-One Discord Utility Bot - Subscribe to access the download
+              The All-in-One Discord Utility Tool - Subscribe to access the download
             </p>
 
             {/* Description */}
             <p className="text-gray-500 mb-12 leading-relaxed">
               To download PlasmaTool, please subscribe to our YouTube channel first. 
-              Get access to advanced Discord management, automation, and integration features for your utility bot.
+              Get access to advanced Discord management, automation, and integration features for your utility tool.
             </p>
 
             {/* Action Buttons */}
