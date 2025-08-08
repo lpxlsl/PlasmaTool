@@ -3,10 +3,11 @@ import { Zap, Sparkles, HexagonIcon } from 'lucide-react';
 import PremiumPage from './components/PremiumPage';
 import DownloadPage from './components/DownloadPage';
 import AuthModal from './components/AuthModal';
+import AdminPanel from './components/AdminPanel';
 
 function App() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [currentPage, setCurrentPage] = useState<'home' | 'premium' | 'download'>('home');
+  const [currentPage, setCurrentPage] = useState<'home' | 'premium' | 'download' | 'admin'>('home');
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [user, setUser] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -138,6 +139,10 @@ function App() {
     return <DownloadPage onBack={() => setCurrentPage('home')} />;
   }
 
+  if (currentPage === 'admin') {
+    return <AdminPanel onBack={() => setCurrentPage('home')} currentUser={user || ''} />;
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden relative">
       {/* Animated Background */}
@@ -258,6 +263,21 @@ function App() {
                         </div>
                       )}
                     </div>
+
+                    {/* Admin Panel Access */}
+                    {user?.toLowerCase() === 'yon' && (
+                      <div className="border-t border-gray-700/50 pt-4 mb-4">
+                        <button
+                          onClick={() => {
+                            setCurrentPage('admin');
+                            setShowUserDropdown(false);
+                          }}
+                          className="w-full py-2 bg-gradient-to-r from-red-600/80 to-orange-600/80 text-white font-semibold rounded-lg hover:from-red-600 hover:to-orange-600 transition-all duration-300"
+                        >
+                          Admin Panel
+                        </button>
+                      </div>
+                    )}
 
                     <button
                       onClick={handleLogout}
