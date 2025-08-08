@@ -52,9 +52,6 @@ const PremiumPage: React.FC<PremiumPageProps> = ({ onBack }) => {
     }
   ];
 
-  const handleChoosePlan = () => {
-    window.open('https://discord.gg/g97DXFbcCW', '_blank');
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden relative">
@@ -176,9 +173,10 @@ const PremiumPage: React.FC<PremiumPageProps> = ({ onBack }) => {
                   {/* CTA Button */}
                   <button 
                     onClick={handleChoosePlan}
-                    className="w-full py-3 bg-gradient-to-r from-purple-600 to-cyan-600 text-white font-bold rounded-lg hover:scale-105 transition-all duration-300 animate-pulse-glow"
+                    className="w-full py-3 bg-gradient-to-r from-gray-600 to-gray-700 text-white font-bold rounded-lg cursor-not-allowed opacity-75"
+                    disabled
                   >
-                    Choose {tier.name}
+                    Coming Soon
                   </button>
                 </div>
 

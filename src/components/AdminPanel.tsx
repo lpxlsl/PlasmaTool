@@ -297,28 +297,35 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onBack, currentUser }) => {
                       <td className="py-4 px-4">
                         {user.username.toLowerCase() === 'yon' ? (
                           <span className="text-red-400 text-sm font-medium">Admin</span>
-                        ) : editingUser === user.username ? (
-                          <div className="flex space-x-2">
-                            <button
-                              onClick={handleSaveEdit}
-                              className="p-2 bg-green-600 hover:bg-green-700 rounded-lg transition-colors duration-300"
-                            >
-                              <Save className="w-4 h-4 text-white" />
-                            </button>
-                            <button
-                              onClick={handleCancelEdit}
-                              className="p-2 bg-gray-600 hover:bg-gray-700 rounded-lg transition-colors duration-300"
-                            >
-                              <X className="w-4 h-4 text-white" />
-                            </button>
-                          </div>
                         ) : (
-                          <button
-                            onClick={() => handleEditUser(user.username, user.subscription)}
-                            className="p-2 bg-purple-600 hover:bg-purple-700 rounded-lg transition-colors duration-300"
-                          >
-                            <Edit2 className="w-4 h-4 text-white" />
-                          </button>
+                          <div className="flex items-center space-x-2">
+                            {editingUser === user.username ? (
+                              <>
+                                <button
+                                  onClick={handleSaveEdit}
+                                  className="p-2 bg-green-600 hover:bg-green-700 rounded-lg transition-colors duration-300"
+                                  title="Save Changes"
+                                >
+                                  <Save className="w-4 h-4 text-white" />
+                                </button>
+                                <button
+                                  onClick={handleCancelEdit}
+                                  className="p-2 bg-gray-600 hover:bg-gray-700 rounded-lg transition-colors duration-300"
+                                  title="Cancel"
+                                >
+                                  <X className="w-4 h-4 text-white" />
+                                </button>
+                              </>
+                            ) : (
+                              <button
+                                onClick={() => handleEditUser(user.username, user.subscription)}
+                                className="p-2 bg-purple-600 hover:bg-purple-700 rounded-lg transition-colors duration-300"
+                                title="Edit Subscription"
+                              >
+                                <Edit2 className="w-4 h-4 text-white" />
+                              </button>
+                            )}
+                          </div>
                         )}
                       </td>
                     </tr>
