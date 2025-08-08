@@ -18,6 +18,24 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onBack, currentUser }) => {
   const [editingUser, setEditingUser] = useState<string | null>(null);
   const [editSubscription, setEditSubscription] = useState<'none' | 'basic' | 'silver' | 'gold'>('none');
 
+  // Only allow yon to access admin panel
+  if (currentUser.toLowerCase() !== 'yon') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold text-red-400 mb-4">Access Denied</h1>
+          <p className="text-gray-400 mb-8">You don't have permission to access this area.</p>
+          <button
+            onClick={onBack}
+            className="px-6 py-3 bg-gradient-to-r from-purple-600 to-cyan-600 text-white font-bold rounded-lg hover:scale-105 transition-all duration-300"
+          >
+            Back to Home
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   useEffect(() => {
     // Load all users from localStorage
     const loadUsers = () => {
@@ -97,7 +115,8 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onBack, currentUser }) => {
   };
 
   const handleEditUser = (username: string, currentSubscription: string) => {
-    if (username.toLowerCase() === 'yon') return; // Can't edit admin
+    // Only yon can edit users, and yon can't edit himself
+    if (currentUser.toLowerCase() !== 'yon' || username.toLowerCase() === 'yon') return;
     setEditingUser(username);
     setEditSubscription(currentSubscription as 'none' | 'basic' | 'silver' | 'gold');
   };
@@ -295,7 +314,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onBack, currentUser }) => {
                       </td>
                       <td className="py-4 px-4 text-gray-400 text-sm">{formatDate(user.registeredAt)}</td>
                       <td className="py-4 px-4">
-                        {user.username.toLowerCase() === 'yon' ? (
+                        {user.username.toLowerCase() === 'yon' || currentUser.toLowerCase() !== 'yon' ? (
                           <span className="text-red-400 text-sm font-medium">Admin</span>
                         ) : (
                           <div className="flex items-center space-x-2">

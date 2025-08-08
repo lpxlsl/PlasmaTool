@@ -13,8 +13,53 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const [userSubscription, setUserSubscription] = useState<'none' | 'basic' | 'silver' | 'gold'>('none');
+  const [websiteViews, setWebsiteViews] = useState(0);
+  const [totalUsers, setTotalUsers] = useState(0);
 
   useEffect(() => {
+    // Track website views
+    const views = parseInt(localStorage.getItem('websiteViews') || '0') + 1;
+    localStorage.setItem('websiteViews', views.toString());
+    setWebsiteViews(views);
+
+    // Count total registered users
+    const countUsers = () => {
+      let userCount = 0;
+      const registeredUsers = new Set();
+      
+      // Check localStorage for user data
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key === 'plasmaUser') {
+          try {
+            const userData = JSON.parse(localStorage.getItem(key) || '{}');
+            if (userData.username) {
+              registeredUsers.add(userData.username.toLowerCase());
+            }
+          } catch (error) {
+            console.error('Error parsing user data:', error);
+          }
+        }
+      }
+      
+      // Add some base users for demonstration
+      registeredUsers.add('yon');
+      if (user) {
+        registeredUsers.add(user.toLowerCase());
+      }
+      
+      return registeredUsers.size;
+    };
+
+    const updateStats = () => {
+      setTotalUsers(countUsers());
+    };
+
+    updateStats();
+
+    // Update stats every 2 minutes
+    const interval = setInterval(updateStats, 120000);
+
     // Check if user is already logged in
     const savedUser = localStorage.getItem('plasmaUser');
     if (savedUser) {
@@ -35,7 +80,10 @@ function App() {
     };
 
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      clearInterval(interval);
+    };
   }, []);
 
   useEffect(() => {
@@ -265,7 +313,7 @@ function App() {
                     </div>
 
                     {/* Admin Panel Access */}
-                    {user?.toLowerCase() === 'yon' && (
+                    {user?.toLowerCase() === 'yon' && getBadgeInfo(userSubscription, user || '')?.text === 'ADMIN+' && (
                       <div className="border-t border-gray-700/50 pt-4 mb-4">
                         <button
                           onClick={() => {
@@ -417,6 +465,26 @@ function App() {
           </div>
         </div>
       </main>
+
+      {/* Website Analytics Footer */}
+      <footer className="relative z-10 px-6 py-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex justify-center space-x-12">
+            <div className="text-center">
+              <div className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent animate-pulse">
+                {websiteViews.toLocaleString()}
+              </div>
+              <div className="text-gray-400 text-sm">Total Views</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent animate-pulse">
+                {totalUsers.toLocaleString()}
+              </div>
+              <div className="text-gray-400 text-sm">Registered Users</div>
+            </div>
+          </div>
+        </div>
+      </footer>
 
       {/* Footer Decoration */}
       <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 animate-pulse" />
