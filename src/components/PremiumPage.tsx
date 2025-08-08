@@ -1,49 +1,11 @@
 import React from 'react';
 import { Zap, Crown, Gem, ArrowLeft, Check } from 'lucide-react';
-import { loadStripe } from '@stripe/stripe-js';
 
 interface PremiumPageProps {
   onBack: () => void;
 }
 
 const PremiumPage: React.FC<PremiumPageProps> = ({ onBack }) => {
-  const handleChoosePlan = async (planType: 'basic' | 'silver' | 'gold') => {
-    const prices = {
-      basic: 5,
-      silver: 10,
-      gold: 20
-    };
-
-    // Simulate Stripe checkout - in production, you'd create a checkout session
-    const confirmed = window.confirm(
-      `Purchase ${planType.toUpperCase()} subscription for €${prices[planType]}?\n\nThis is a demo - no actual payment will be processed.`
-    );
-
-    if (confirmed) {
-      // Get current user
-      const savedUser = localStorage.getItem('plasmaUser');
-      if (savedUser) {
-        const userData = JSON.parse(savedUser);
-        userData.subscription = planType;
-        userData.subscriptionDate = new Date().toISOString();
-        localStorage.setItem('plasmaUser', JSON.stringify(userData));
-        
-        // Update users list for admin panel
-        const allUsers = JSON.parse(localStorage.getItem('plasmaUsers') || '[]');
-        const userIndex = allUsers.findIndex((u: any) => u.username === userData.username);
-        if (userIndex >= 0) {
-          allUsers[userIndex] = userData;
-        } else {
-          allUsers.push(userData);
-        }
-        localStorage.setItem('plasmaUsers', JSON.stringify(allUsers));
-        
-        alert(`Successfully purchased ${planType.toUpperCase()} subscription! Please refresh the page to see your new badge.`);
-        window.location.reload();
-      }
-    }
-  };
-
   const tiers = [
     {
       name: 'Basic',
@@ -89,6 +51,10 @@ const PremiumPage: React.FC<PremiumPageProps> = ({ onBack }) => {
       ]
     }
   ];
+
+  const handleChoosePlan = () => {
+    window.open('https://discord.gg/g97DXFbcCW', '_blank');
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden relative">
@@ -209,7 +175,7 @@ const PremiumPage: React.FC<PremiumPageProps> = ({ onBack }) => {
 
                   {/* CTA Button */}
                   <button 
-                    onClick={() => handleChoosePlan(tier.name.toLowerCase() as 'basic' | 'silver' | 'gold')}
+                    onClick={handleChoosePlan}
                     className="w-full py-3 bg-gradient-to-r from-purple-600 to-cyan-600 text-white font-bold rounded-lg hover:scale-105 transition-all duration-300 animate-pulse-glow"
                   >
                     Choose {tier.name}
@@ -226,17 +192,25 @@ const PremiumPage: React.FC<PremiumPageProps> = ({ onBack }) => {
           <div className="text-center mt-16">
             <div className="mb-8 p-6 bg-gradient-to-r from-purple-900/30 to-cyan-900/30 rounded-2xl border border-purple-500/30 max-w-2xl mx-auto">
               <h3 className="text-2xl font-bold text-white mb-4 animate-pulse">
-                Secure Payment with Stripe
+                Ready to Upgrade?
               </h3>
               <p className="text-purple-300 mb-4">
-                All payments are processed securely through Stripe. Your subscription will be activated immediately after payment.
+                Join our Discord server to purchase your premium subscription and unlock exclusive features.
               </p>
+              <a 
+                href="https://discord.gg/g97DXFbcCW"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-cyan-600 text-white font-bold rounded-lg hover:scale-105 transition-all duration-300 animate-pulse-glow"
+              >
+                <span>Join Discord to Buy</span>
+              </a>
             </div>
             <p className="text-gray-400 mb-4">
               All subscriptions are billed monthly and can be cancelled anytime.
             </p>
             <p className="text-sm text-gray-500">
-              Need help? Join our Discord for support.
+              Need help choosing? Join our Discord for personalized recommendations.
             </p>
           </div>
         </div>

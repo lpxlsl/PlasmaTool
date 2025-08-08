@@ -3,11 +3,10 @@ import { Zap, Sparkles, HexagonIcon } from 'lucide-react';
 import PremiumPage from './components/PremiumPage';
 import DownloadPage from './components/DownloadPage';
 import AuthModal from './components/AuthModal';
-import AdminPanel from './components/AdminPanel';
 
 function App() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [currentPage, setCurrentPage] = useState<'home' | 'premium' | 'download' | 'admin'>('home');
+  const [currentPage, setCurrentPage] = useState<'home' | 'premium' | 'download'>('home');
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [user, setUser] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -57,17 +56,6 @@ function App() {
       registeredAt: new Date().toISOString()
     };
     localStorage.setItem('plasmaUser', JSON.stringify(userData));
-    
-    // Add to users list for admin panel
-    const allUsers = JSON.parse(localStorage.getItem('plasmaUsers') || '[]');
-    const existingUserIndex = allUsers.findIndex((u: any) => u.username === username);
-    if (existingUserIndex >= 0) {
-      allUsers[existingUserIndex] = userData;
-    } else {
-      allUsers.push(userData);
-    }
-    localStorage.setItem('plasmaUsers', JSON.stringify(allUsers));
-    
     setUser(username);
     setUserSubscription(subscription);
     setIsAuthModalOpen(false);
@@ -148,10 +136,6 @@ function App() {
 
   if (currentPage === 'download') {
     return <DownloadPage onBack={() => setCurrentPage('home')} />;
-  }
-
-  if (currentPage === 'admin') {
-    return <AdminPanel onBack={() => setCurrentPage('home')} />;
   }
 
   return (
@@ -274,21 +258,6 @@ function App() {
                         </div>
                       )}
                     </div>
-
-                    {/* Admin Panel Access */}
-                    {user?.toLowerCase() === 'yon' && (
-                      <div className="border-t border-gray-700/50 pt-4 mb-4">
-                        <button
-                          onClick={() => {
-                            setCurrentPage('admin');
-                            setShowUserDropdown(false);
-                          }}
-                          className="w-full py-2 bg-gradient-to-r from-red-600/80 to-orange-600/80 text-white font-semibold rounded-lg hover:from-red-600 hover:to-orange-600 transition-all duration-300"
-                        >
-                          Admin Panel
-                        </button>
-                      </div>
-                    )}
 
                     <button
                       onClick={handleLogout}
