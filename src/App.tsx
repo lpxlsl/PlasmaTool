@@ -309,79 +309,81 @@ function App() {
               <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent animate-pulse">
                 PlasmaTool
               </h1>
-              <div className="relative user-dropdown">
-                <button
-                  onClick={() => setShowUserDropdown(!showUserDropdown)}
-                  className="flex items-center space-x-2 px-3 py-1 bg-gradient-to-r from-purple-900/50 to-cyan-900/50 rounded-full border border-purple-500/30 hover:border-purple-400/50 transition-all duration-300"
-                >
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                  <span className="text-purple-300 text-sm font-medium">{user}</span>
-                  {getBadgeInfo(userSubscription, user || '') && (
-                    <div className={`px-2 py-0.5 text-xs font-bold rounded-full bg-gradient-to-r ${getBadgeInfo(userSubscription, user || '')?.color} ${getBadgeInfo(userSubscription, user || '')?.textColor} shadow-lg ${getBadgeInfo(userSubscription, user || '')?.glow} animate-pulse`}>
-                      {getBadgeInfo(userSubscription, user || '')?.text}
-                    </div>
-                  )}
-                </button>
-
-                {/* User Dropdown */}
-                {showUserDropdown && (
-                  <div className="absolute top-full right-0 mt-2 w-64 bg-gradient-to-br from-gray-900/95 to-slate-900/95 backdrop-blur-lg border border-gray-700/50 rounded-2xl p-4 shadow-2xl animate-fade-in-up z-50">
-                    <div className="text-center mb-4">
-                      <div className="w-12 h-12 bg-gradient-to-r from-purple-600 to-cyan-600 rounded-full flex items-center justify-center mx-auto mb-2">
-                        <span className="text-white font-bold text-lg">{user?.charAt(0).toUpperCase()}</span>
+              {user && (
+                <div className="relative user-dropdown">
+                  <button
+                    onClick={() => setShowUserDropdown(!showUserDropdown)}
+                    className="flex items-center space-x-2 px-3 py-1 bg-gradient-to-r from-purple-900/50 to-cyan-900/50 rounded-full border border-purple-500/30 hover:border-purple-400/50 transition-all duration-300"
+                  >
+                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                    <span className="text-purple-300 text-sm font-medium">{user}</span>
+                    {getBadgeInfo(userSubscription, user || '') && (
+                      <div className={`px-2 py-0.5 text-xs font-bold rounded-full bg-gradient-to-r ${getBadgeInfo(userSubscription, user || '')?.color} ${getBadgeInfo(userSubscription, user || '')?.textColor} shadow-lg ${getBadgeInfo(userSubscription, user || '')?.glow} animate-pulse`}>
+                        {getBadgeInfo(userSubscription, user || '')?.text}
                       </div>
-                      <h3 className="text-white font-bold text-lg">{user}</h3>
-                      <p className="text-gray-400 text-sm">Member since {new Date().getFullYear()}</p>
-                    </div>
+                    )}
+                  </button>
 
-                    <div className="border-t border-gray-700/50 pt-4 mb-4">
-                      <h4 className="text-purple-300 font-semibold mb-2">Subscription Status</h4>
-                      {getBadgeInfo(userSubscription, user || '') ? (
-                        <div className="flex items-center justify-center">
-                          <div className={`px-4 py-2 text-sm font-bold rounded-full bg-gradient-to-r ${getBadgeInfo(userSubscription, user || '')?.color} ${getBadgeInfo(userSubscription, user || '')?.textColor} shadow-lg ${getBadgeInfo(userSubscription, user || '')?.glow} animate-pulse`}>
-                            {getBadgeInfo(userSubscription, user || '')?.text}
-                          </div>
+                  {/* User Dropdown */}
+                  {showUserDropdown && (
+                    <div className="absolute top-full right-0 mt-2 w-64 bg-gradient-to-br from-gray-900/95 to-slate-900/95 backdrop-blur-lg border border-gray-700/50 rounded-2xl p-4 shadow-2xl animate-fade-in-up z-50">
+                      <div className="text-center mb-4">
+                        <div className="w-12 h-12 bg-gradient-to-r from-purple-600 to-cyan-600 rounded-full flex items-center justify-center mx-auto mb-2">
+                          <span className="text-white font-bold text-lg">{user?.charAt(0).toUpperCase()}</span>
                         </div>
-                      ) : (
-                        <div className="text-center">
-                          <p className="text-gray-400 text-sm mb-2">No active subscription</p>
+                        <h3 className="text-white font-bold text-lg">{user}</h3>
+                        <p className="text-gray-400 text-sm">Member since {new Date().getFullYear()}</p>
+                      </div>
+
+                      <div className="border-t border-gray-700/50 pt-4 mb-4">
+                        <h4 className="text-purple-300 font-semibold mb-2">Subscription Status</h4>
+                        {getBadgeInfo(userSubscription, user || '') ? (
+                          <div className="flex items-center justify-center">
+                            <div className={`px-4 py-2 text-sm font-bold rounded-full bg-gradient-to-r ${getBadgeInfo(userSubscription, user || '')?.color} ${getBadgeInfo(userSubscription, user || '')?.textColor} shadow-lg ${getBadgeInfo(userSubscription, user || '')?.glow} animate-pulse`}>
+                              {getBadgeInfo(userSubscription, user || '')?.text}
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="text-center">
+                            <p className="text-gray-400 text-sm mb-2">No active subscription</p>
+                            <button
+                              onClick={() => {
+                                setCurrentPage('premium');
+                                setShowUserDropdown(false);
+                              }}
+                              className="text-purple-400 hover:text-purple-300 text-sm transition-colors duration-300"
+                            >
+                              Upgrade to Premium
+                            </button>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Admin Panel Access */}
+                      {user?.toLowerCase() === 'yon' && getBadgeInfo(userSubscription, user || '')?.text === 'ADMIN+' && (
+                        <div className="border-t border-gray-700/50 pt-4 mb-4">
                           <button
                             onClick={() => {
-                              setCurrentPage('premium');
+                              setCurrentPage('admin');
                               setShowUserDropdown(false);
                             }}
-                            className="text-purple-400 hover:text-purple-300 text-sm transition-colors duration-300"
+                            className="w-full py-2 bg-gradient-to-r from-red-600/80 to-orange-600/80 text-white font-semibold rounded-lg hover:from-red-600 hover:to-orange-600 transition-all duration-300"
                           >
-                            Upgrade to Premium
+                            Admin Panel
                           </button>
                         </div>
                       )}
+
+                      <button
+                        onClick={handleLogout}
+                        className="w-full py-2 bg-gradient-to-r from-red-600/80 to-red-700/80 text-white font-semibold rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-300"
+                      >
+                        Logout
+                      </button>
                     </div>
-
-                    {/* Admin Panel Access */}
-                    {user?.toLowerCase() === 'yon' && getBadgeInfo(userSubscription, user || '')?.text === 'ADMIN+' && (
-                      <div className="border-t border-gray-700/50 pt-4 mb-4">
-                        <button
-                          onClick={() => {
-                            setCurrentPage('admin');
-                            setShowUserDropdown(false);
-                          }}
-                          className="w-full py-2 bg-gradient-to-r from-red-600/80 to-orange-600/80 text-white font-semibold rounded-lg hover:from-red-600 hover:to-orange-600 transition-all duration-300"
-                        >
-                          Admin Panel
-                        </button>
-                      </div>
-                    )}
-
-                    <button
-                      onClick={handleLogout}
-                      className="w-full py-2 bg-gradient-to-r from-red-600/80 to-red-700/80 text-white font-semibold rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-300"
-                    >
-                      Logout
-                    </button>
-                  </div>
-                )}
-              </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
 
