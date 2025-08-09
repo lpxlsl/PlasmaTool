@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Zap, Sparkles, HexagonIcon } from 'lucide-react';
+import { Zap, Sparkles, HexagonIcon, X } from 'lucide-react';
 import PremiumPage from './components/PremiumPage';
 import DownloadPage from './components/DownloadPage';
 import AuthModal from './components/AuthModal';
