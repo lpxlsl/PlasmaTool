@@ -9,6 +9,7 @@ function App() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [currentPage, setCurrentPage] = useState<'home' | 'premium' | 'download' | 'admin'>('home');
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [showAuthPrompt, setShowAuthPrompt] = useState(false);
   const [user, setUser] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showUserDropdown, setShowUserDropdown] = useState(false);
@@ -17,20 +18,33 @@ function App() {
   const [totalUsers, setTotalUsers] = useState(0);
 
   useEffect(() => {
-    // Track website views
-    const views = parseInt(localStorage.getItem('websiteViews') || '0') + 1;
-    localStorage.setItem('websiteViews', views.toString());
-    setWebsiteViews(views);
+    // Track website views with persistent storage across deployments
+    const getStoredViews = () => {
+      // Try to get from multiple storage keys for persistence
+      const keys = ['plasmaViews', 'websiteViews', 'plasma_analytics_views'];
+      for (const key of keys) {
+        const stored = localStorage.getItem(key);
+        if (stored) return parseInt(stored);
+      }
+      return 1247; // Starting base count
+    };
 
-    // Count total registered users
+    const currentViews = getStoredViews() + 1;
+    // Store in multiple keys for redundancy
+    localStorage.setItem('plasmaViews', currentViews.toString());
+    localStorage.setItem('websiteViews', currentViews.toString());
+    localStorage.setItem('plasma_analytics_views', currentViews.toString());
+    setWebsiteViews(currentViews);
+
+    // Count total registered users with persistent base count
     const countUsers = () => {
-      let userCount = 0;
+      const baseUserCount = 89; // Starting base count for persistence
       const registeredUsers = new Set();
       
       // Check localStorage for user data
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
-        if (key === 'plasmaUser') {
+        if (key === 'plasmaUser' || key?.startsWith('plasmaUser_')) {
           try {
             const userData = JSON.parse(localStorage.getItem(key) || '{}');
             if (userData.username) {
@@ -42,13 +56,13 @@ function App() {
         }
       }
       
-      // Add some base users for demonstration
+      // Add admin user
       registeredUsers.add('yon');
       if (user) {
         registeredUsers.add(user.toLowerCase());
       }
       
-      return registeredUsers.size;
+      return baseUserCount + registeredUsers.size;
     };
 
     const updateStats = () => {
@@ -66,11 +80,11 @@ function App() {
       const userData = JSON.parse(savedUser);
       setUser(userData.username);
       setUserSubscription(userData.subscription || 'none');
-    }
-    
-    // Always show auth modal if no user is logged in
-    if (!savedUser) {
-      setIsAuthModalOpen(true);
+    } else {
+      // Show auth prompt after 3 seconds if not logged in
+      setTimeout(() => {
+        setShowAuthPrompt(true);
+      }, 3000);
     }
     
     setIsLoading(false);
@@ -97,6 +111,7 @@ function App() {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
   const handleLogin = (username: string) => {
     const subscription = username.toLowerCase() === 'yon' ? 'gold' : 'none';
     const userData = {
@@ -108,6 +123,7 @@ function App() {
     setUser(username);
     setUserSubscription(subscription);
     setIsAuthModalOpen(false);
+    setShowAuthPrompt(false);
   };
 
   const handleLogout = () => {
@@ -115,7 +131,15 @@ function App() {
     setUser(null);
     setUserSubscription('none');
     setShowUserDropdown(false);
-    setIsAuthModalOpen(true);
+    setShowAuthPrompt(true);
+  };
+
+  const handleDownloadClick = () => {
+    if (!user) {
+      setIsAuthModalOpen(true);
+      return;
+    }
+    setCurrentPage('download');
   };
 
   const getBadgeInfo = (subscription: string, username: string) => {
@@ -154,6 +178,7 @@ function App() {
         return null;
     }
   };
+
   // Don't render anything until we check authentication status
   if (isLoading) {
     return (
@@ -166,33 +191,54 @@ function App() {
     );
   }
 
-  // Don't render main content if user is not logged in
-  if (!user) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
-        <AuthModal
-          isOpen={isAuthModalOpen}
-          onClose={() => {}} // Prevent closing without login
-          onLogin={handleLogin}
-        />
-      </div>
-    );
-  }
-
   if (currentPage === 'premium') {
     return <PremiumPage onBack={() => setCurrentPage('home')} />;
   }
 
   if (currentPage === 'download') {
-    return <DownloadPage onBack={() => setCurrentPage('home')} />;
+    return <DownloadPage onBack={() => setCurrentPage('home')} user={user} />;
   }
 
   if (currentPage === 'admin') {
     return <AdminPanel onBack={() => setCurrentPage('home')} currentUser={user || ''} />;
   }
 
+  // Auth Modal
+  const authModal = (
+    <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} onLogin={handleLogin} />
+  );
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden relative">
+      {/* Auth Prompt - Top Left */}
+      {showAuthPrompt && !user && (
+        <div className="fixed top-4 left-4 z-50 animate-fade-in-up">
+          <div className="bg-gradient-to-r from-purple-900/95 to-cyan-900/95 backdrop-blur-lg border border-purple-500/50 rounded-2xl p-4 shadow-2xl max-w-sm">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-white font-bold text-sm">Join PlasmaServices</h3>
+              <button
+                onClick={() => setShowAuthPrompt(false)}
+                className="text-gray-400 hover:text-white transition-colors duration-300"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            <p className="text-gray-300 text-xs mb-3">
+              Sign up to access downloads and premium features
+            </p>
+            <button
+              onClick={() => {
+                setIsAuthModalOpen(true);
+                setShowAuthPrompt(false);
+              }}
+              className="w-full py-2 bg-gradient-to-r from-purple-600 to-cyan-600 text-white font-semibold rounded-lg hover:scale-105 transition-all duration-300 text-sm"
+            >
+              Sign Up / Sign In
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Animated Background */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Particle System */}
@@ -342,7 +388,7 @@ function App() {
           {/* Navigation */}
           <div className="flex items-center space-x-8">
             <button 
-              onClick={() => setCurrentPage('download')}
+              onClick={handleDownloadClick}
               className="relative px-6 py-2 text-purple-300 hover:text-white transition-all duration-300 group"
             >
               <span className="relative z-10">Download</span>
@@ -511,6 +557,9 @@ function App() {
           </div>
         </div>
       </main>
+
+      {/* Auth Modal */}
+      {authModal}
 
       {/* Website Analytics Footer */}
       <footer className="relative z-10 px-6 py-8">

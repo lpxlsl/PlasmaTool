@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Download, ExternalLink, Check, Loader2 } from 'lucide-react';
+import { ArrowLeft, Download, ExternalLink, Check, Loader2, Lock } from 'lucide-react';
 
 interface DownloadPageProps {
   onBack: () => void;
+  user?: string | null;
 }
 
-const DownloadPage: React.FC<DownloadPageProps> = ({ onBack }) => {
+const DownloadPage: React.FC<DownloadPageProps> = ({ onBack, user }) => {
   const [isChecking, setIsChecking] = useState(false);
   const [hasSubscribed, setHasSubscribed] = useState(false);
   const [hasClickedSubscribe, setHasClickedSubscribe] = useState(false);
@@ -34,6 +35,29 @@ const DownloadPage: React.FC<DownloadPageProps> = ({ onBack }) => {
       }, 1000);
     }, 2000);
   };
+
+  // If user is not logged in, show auth required message
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+        <div className="max-w-md mx-auto text-center p-8">
+          <div className="bg-gradient-to-br from-gray-900/80 to-slate-900/80 backdrop-blur-lg border border-gray-700/50 rounded-3xl p-12">
+            <Lock className="w-16 h-16 text-red-400 mx-auto mb-6 animate-pulse" />
+            <h1 className="text-3xl font-bold text-white mb-4">Authentication Required</h1>
+            <p className="text-gray-400 mb-8">
+              You need to sign in to access the download page and get PlasmaTool.
+            </p>
+            <button
+              onClick={onBack}
+              className="w-full py-3 bg-gradient-to-r from-purple-600 to-cyan-600 text-white font-bold rounded-lg hover:scale-105 transition-all duration-300 animate-pulse-glow"
+            >
+              Back to Home & Sign In
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden relative">
