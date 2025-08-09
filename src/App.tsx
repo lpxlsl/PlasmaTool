@@ -395,7 +395,7 @@ function App() {
                 onClick={() => setIsAuthModalOpen(true)}
                 className="px-4 py-2 bg-gradient-to-r from-purple-600 to-cyan-600 text-white font-semibold rounded-lg hover:scale-105 transition-all duration-300 animate-pulse-glow"
               >
-                Sign In / Sign Up
+                Sign In
               </button>
             )}
 
