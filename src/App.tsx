@@ -389,6 +389,16 @@ function App() {
 
           {/* Navigation */}
           <div className="flex items-center space-x-8">
+            {/* Sign In Button for non-authenticated users */}
+            {!user && (
+              <button
+                onClick={() => setIsAuthModalOpen(true)}
+                className="px-4 py-2 bg-gradient-to-r from-purple-600 to-cyan-600 text-white font-semibold rounded-lg hover:scale-105 transition-all duration-300 animate-pulse-glow"
+              >
+                Sign In / Sign Up
+              </button>
+            )}
+
             <button 
               onClick={handleDownloadClick}
               className="relative px-6 py-2 text-purple-300 hover:text-white transition-all duration-300 group"
